@@ -12,6 +12,7 @@ class Node:
     def __init__(self,key):
         self.key = key
         self.next = None
+    
         
 # Traversing through a  linked list
 
@@ -93,6 +94,36 @@ class Node:
         curr.next = None               #Unlink the last Node
         return head
     
+# Find the middle of the Linked List 
+
+    #Naive approach, with two traversals
+
+    def printMiddle(head):
+        if head == None:
+            return 
+        count = 0
+        curr = head
+        while curr:
+            curr = curr.next
+            count = count + 1
+        curr = head
+        for i in range(count//2):
+            curr = curr.next
+        print(curr.key)
+
+    # Efficient approach, With one traversal
+
+    def printMiddle1(head):
+        if head == None:
+            return 
+        slow = head
+        fast = head
+        while fast != None and fast.next != None:
+            slow = slow.next
+            fast = fast.next.next
+        print(slow.key)
+        
+    
 # Find nth node from the end of linked list--> start from the end
 
 ## FIrst method using the length of linked list
@@ -167,14 +198,14 @@ class Node:
 
     #First Method
 
-    def reverseList3(head):
+    def reverselist3(head):
         
         if head == None:
             return head
         if head.next == None:
             return head
         
-        rest_head = reverseList3(head.next)
+        rest_head = reverselist3(head.next)
         rest_tail = head.next
         rest_tail.next = head
         head.next = None
@@ -185,7 +216,12 @@ class Node:
     
     #Second Method
     
-    def reverselist4(head):
+    def reverselist4(curr, prev = None):
+        if curr == None:
+            return prev
+        next = curr.next
+        curr.next = prev
+        return reverselist4(next, curr)
         
     
     
@@ -212,7 +248,7 @@ head.next.next = Node(20)
 head.next.next.next = Node(30)
 head.next.next.next.next = Node(30)
 #Node.printlist(head)
-Node.removeDups(head)
+Node.reverselist2(head)
 Node.printlist(head)
 
 
