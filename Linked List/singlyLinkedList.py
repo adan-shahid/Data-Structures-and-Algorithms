@@ -7,6 +7,8 @@ This is a temporary script file.
 
 # Simple Linked List implementation in Python.
 
+## Head is basically Reference to the First Node. ##
+
 
 class Node:
     def __init__(self,key):
