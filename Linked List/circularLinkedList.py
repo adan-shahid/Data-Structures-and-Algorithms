@@ -68,6 +68,7 @@ class Node:
 
 
 
+
         # Efficient Approach
 
     def insertEnd2(head,x):
@@ -80,6 +81,53 @@ class Node:
             head.next = temp
             temp.key, head.key = head.key, temp.key
             return temp
+
+
+# Delete Head of Circular Linked List
+
+    # Naive approach
+
+    def delHead1(head):
+        if head == None:
+            return None
+        elif head.next == head:
+            return None
+        curr = head
+        while curr.next != head:
+            curr = curr.next
+        curr.next = head.next
+        return curr.next
+    
+
+
+    # Efficient Approach
+    # Copy the data of next node to the head
+    # and then delete the next node
+
+    def delHead2(head):
+        if head == None:
+            return None
+        elif head.next == head:
+            return None
+        else:
+            head.key = head.next.key
+            head.next = head.next.next
+            return head
+        
+
+# Delete the Kth node of Circular Linked List
+    def delKth(head,k):
+        if head == None:
+            return head
+        elif k == 1:
+            return delHead2(head)
+        else:
+            curr = head
+            for i in range(k-2):
+                curr = curr.next
+            curr.next = curr.next.next
+            return head
+
 
 
 head = Node(10)
