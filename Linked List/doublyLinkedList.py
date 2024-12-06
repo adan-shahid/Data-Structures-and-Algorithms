@@ -49,6 +49,34 @@ class Node:
                 head = head.next
                 head.prev = None
                 return head
+            
+# Delete the Last Node of DLL
+
+    def delLast(head):
+        if head == None:
+            return None
+        if head.next == None:
+            return None
+        curr = head
+        while curr.next.next != None:
+            curr = curr.next
+        curr.next = None
+        return head
+    
+# Reverse a Doubly Linked List
+
+    def reverseDll(head):
+        if head == None:
+            return None
+        if head.next == None:
+            return head
+        curr = head
+        prev = None
+        while curr != None:
+            prev = curr
+            curr.next, curr.prev = curr.prev, curr.next
+            curr = curr.prev
+        return prev
 
 
 
