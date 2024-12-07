@@ -120,7 +120,7 @@ class Node:
         if head == None:
             return head
         elif k == 1:
-            return delHead2(head)
+            return Node.delHead2(head)
         else:
             curr = head
             for i in range(k-2):

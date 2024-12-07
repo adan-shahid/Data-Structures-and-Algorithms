@@ -207,7 +207,7 @@ class Node:
         if head.next == None:
             return head
         
-        rest_head = reverselist3(head.next)
+        rest_head = Node.reverselist3(head.next)
         rest_tail = head.next
         rest_tail.next = head
         head.next = None
@@ -223,7 +223,7 @@ class Node:
             return prev
         next = curr.next
         curr.next = prev
-        return reverselist4(next, curr)
+        return Node.reverselist4(next, curr)
         
     
     
