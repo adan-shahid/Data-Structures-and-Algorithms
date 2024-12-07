@@ -51,7 +51,42 @@ class Node:
             prev_first = first
             return head
         
+
+# Detect a loop in a Linked List using Floyd's Cycle Algorithm
+
+    def isLoop(head):
+        slow_p = head
+        fast_p = head
+        while fast_p != None and fast_p.next != None:
+            slow_p = slow_p.next
+            fast_p = fast_p.next.next
+            if slow_p == fast_p:
+                return True
+        return False
+    
+
+# Detect and Remove a Loop in a Linked List.
+
+    def detectRemoveloop(head):
+        slow = head
+        fast = head
+        while fast != None and fast.next != None:  # Detecting the Loop
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                break
+        if slow != fast:
+            return 
+        slow = head
+        while slow.next != fast.next:  # Removing the loop
+            slow = slow.next
+            fast = fast.next
+        fast.next = None
+    
+
+
         
+
 
 
 
