@@ -82,7 +82,68 @@ class Node:
             slow = slow.next
             fast = fast.next
         fast.next = None
-    
+
+
+# Intersection point of two Linked Lists
+
+    def getIntersection1(head1,head2): #  it will take O(m) Auxillary Space, m-->head1 
+        s = set
+        curr = head1
+        while curr != None:
+            s.add(curr)
+            curr = curr.next
+        curr = head2
+        while curr != None:
+            if curr in s:
+                return curr.key
+            curr = curr.next
+        return -1
+
+
+    # With O(1) or contt. Auxillary Space
+
+    def getIntersection2(d, head1, head2):
+        curr1 = head1
+        curr2 = head2
+        for i in range(d):
+            if curr1 == None:
+                return -1
+            curr1 = curr1.next
+        while curr1 != None and curr2 != None:
+            if curr1 == curr2:
+                return curr1.key
+            curr1 = curr1.next
+            curr2 = curr2.next
+
+# Segregate Even & Odd Node in Linked List
+
+    def segregate(head):
+        es, ee, os, oe = None, None, None, None
+        curr = head
+        while curr != None:
+            x = curr.key
+            if x % 2 == 0:
+                if es == None:
+                    es = curr
+                    ee = es
+                else:
+                    ee.next = curr
+                    ee = ee.next
+            else:
+                if os == None:
+                    os = curr
+                    oe = os
+                else:
+                    oe.next = curr
+                    oe = oe.next
+            curr = curr.next
+        if os == None or es == None:
+            return head
+        ee.next = os
+        os.next = None
+        return es
+
+        
 
 
         
