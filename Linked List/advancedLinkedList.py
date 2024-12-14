@@ -143,6 +143,40 @@ class Node:
         os.next = None
         return es
 
+# Pairwise Swap Nodes.
+
+    # Naive Method--> Swapping Data.
+
+    def pairwiseSwap1(head):
+        curr = head
+        while curr != None and curr.next != None:
+            curr.key, curr.next.key = curr.next.key, curr.key
+            curr = curr.next.next
+        return head
+
+
+    # Efficient Approach--> By changing the Links
+
+    def pairwiseSwap2(head):
+        if head == None or head.next == None:
+            return head
+        curr = head.next.next
+        prev = head
+        head = head.next
+        head.next = prev
+        while curr != None and curr.next != None:
+            prev.next = curr.next
+            prev = curr
+            next = curr.next.next
+            curr.next.next = curr
+            curr = next
+        prev.next = curr
+        return head
+
+# Clone a Linked List with Random connections.
+
+
+
         
 
 
