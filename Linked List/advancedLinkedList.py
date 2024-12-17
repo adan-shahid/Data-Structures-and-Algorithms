@@ -3,6 +3,7 @@
 
 
 class Node:
+
     def __init__(self,key):
         self.key = key
         self.next = None
@@ -175,7 +176,117 @@ class Node:
 
 # Clone a Linked List with Random connections.
 
+    # Using Dictionary, inefficient method
 
+    def clone1(h1):
+        d = {None:None}
+        curr = head
+        while curr != None:             
+            d[curr] = Node(curr.key)
+            curr = curr.next
+
+        curr = head
+        while curr !=None:
+            d[curr].next = d[curr.next]    
+            d[curr].random = d[curr.random]
+            curr = curr.next
+        return d[h1]
+
+    # Efficient Method
+
+    def clone2(h1):
+        curr = h1
+        while curr != None:
+            next = curr.next            # Insert Clone Nodes Alternatively.
+            curr.next = Node(curr.key)
+            curr.next.next = next
+            curr = next
+
+        curr = h1
+        while curr != None:              # Connect Clone Nodes with Random.
+            curr.next.random = curr.random.next
+            curr = curr.next.next
+
+        h2 = h1.next
+        clone = h2
+        curr = h1
+        while curr != None:               # Separate Original and Clone Nodes.
+            curr.next = curr.next.next
+            clone.next = None if (clone.next == None) else clone.next.next
+            clone = clone.next
+            curr = curr.next
+        return h2
+
+# Merge Two Sorted Linked Lists.
+
+    def sortedMerge(a,b):
+        if (a == None):
+            return b
+        if (b == None):
+            return a
+        
+        head,tail = None, None
+
+        if (a.key <= b.key):
+            head = tail = a
+            a = a.next
+
+        else:
+            head = tail = b
+            b = b.next
+
+        while (a != None and b != None):
+            if (a.key <= b.key):
+                tail.next = a
+                tail = a
+                a = a.next
+            else:
+                tail.next = b
+                tail = b
+                b = b.next
+        
+        if (a == None):
+            tail.next = b
+        else:
+            tail.next = a
+        return head
+    
+# Check either LL is Palindrome
+
+    # Naive Solution --> Stack data structure
+
+    def isPalindrome(head):
+        stack = []
+        curr = head
+        while (curr != None):
+            stack.append(curr.key)
+            curr = curr.key
+        curr = head
+        while (curr != None):
+            if (stack.pop() != curr.key):
+                return False
+            curr = curr.next
+        return True
+    
+    # Efficient Solution
+
+    def isPalindrome2(head):
+        if (head == None):
+            return True
+        slow, fast = head, head
+        while (fast.next != None and fast.next.next != None):
+            slow = slow.next
+            fast = fast.next.next
+        
+        rev = Node.revrseList(slow.next)
+        curr = head
+
+        while (rev != head):
+            if (rev.key != curr.key):
+                return False
+            rev = rev.next
+            curr = curr.next
+        return True
 
         
 
@@ -195,3 +306,5 @@ head.next = Node(20)
 head.next.next = Node(20)
 head.next.next.next = Node(30)
 head.next.next.next.next = Node(30)
+
+print(Node.clone2(10))
