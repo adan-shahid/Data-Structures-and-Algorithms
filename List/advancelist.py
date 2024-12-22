@@ -46,7 +46,94 @@ def maxDiff2(l,n):
     return res
 
 
+
+# Stock Buy and Sell
+
+def maxProfit(price,n):
+    profit = 0
+    for i in range(1,n):
+        if price[i] > price[i-1]:
+            profit += price[i] - price[i-1]
+    
+    return profit
+
+
+# Trapping Rain Water
+
+    # Naive Solution
+
+def getWater1(l,n):
+    res = 0
+    for i in range(1,n-1):
+        lmax = l[i]
+
+        for j in range(0,i):
+            lmax = max(lmax,l[j])
+
+        rmax = l[j]
+
+        for j in range(i+1, n):
+            rmax = max(rmax,l[j])
+
+        res = res + (min(lmax,rmax) - l[i])
+
+    return res
+
+
+    # Efficient Solution
+
+def getWater2(l,n):
+    res = 0
+    lmax = [0] * n
+    rmax = [0] * n
+
+    lmax[0] = l[0]
+    for i in range(1,n):
+        lmax = max(l[i], lmax[i-1])
+
+    rmax[n-1] = l[n-1]
+    for i in range(n-2, -1, -1):
+        rmax = max(l[i], rmax[i+1])
+
+    for i in range(1, n-1):
+        res = res + (min(lmax[i], rmax[i])-l[i])
+
+    return res
+
+
+# Maximum Length SUblist --> That has alternating enev/odd  element
+
+    # Naive Approach
+
+def maxEvenOdd1(l,n):
+    res = 1
+    for i in range(0,n):
+        curr = 1
+        for j in range(i+1,n):
+            if (l[j] %2 == 0 and l[j-1] % 2 != 0 ) or (l[j] % 2 != 0 and l[j-1]%2 == 0):
+                curr += 1
+            else:
+                break
+
+        res = max(res,curr)
+    return res
+
+    # Efficient Solution
+
+def maxEvenOdd2(l,n):
+    res = 1
+    curr= 1
+    for i in range(1,n):
+        if (l[i] %2 == 0 and l[i-1] % 2 != 0 ) or (l[i] % 2 != 0 and l[i-1]%2 == 0):
+            curr += 1
+            res = max(res,curr)
+        else:
+            curr = 1
+
+    return res
+
+
 l = [1,2,3,4,5,6]
 d = 6
-print(maxDiff2(l,d))
+print(maxProfit(l,d))
 
