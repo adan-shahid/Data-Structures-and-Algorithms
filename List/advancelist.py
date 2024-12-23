@@ -133,7 +133,73 @@ def maxEvenOdd2(l,n):
     return res
 
 
-l = [1,2,3,4,5,6]
-d = 6
-print(maxProfit(l,d))
+# Maximum Sum Sublist or Subarray
+
+    # Naive Approach
+
+def maxSum1(l,n):
+    res = l[0]
+    for i in range(0,n):
+        curr = 0
+        for j in range(i,n):
+            curr = curr + l[j]
+            res = max(res,curr)
+    return res
+
+    # Efficient Approach
+
+def maxSum2(l,n):
+    res = l[0]
+    maxEnding = l[0]
+    for i in range(1,n):
+        maxEnding = max(maxEnding+l[i], l[i])
+        res = max(maxEnding,res)
+    return res
+
+# Maximum Circular Sum Subarray or Sublist
+
+    # Naive Approach
+
+def maxCircularSum1(l,n):
+    res = l[0]
+    for i in range(0,n):
+        curr_max = l[i]
+        curr_sum = l[i]
+
+        for j in range(1,n):
+            index = (i+j)%n
+            curr_sum += l[index]
+            curr_max = max(curr_max, curr_sum)
+        res = max(res, curr_max)
+    return res
+
+
+    # Efficient Approach
+def normalMaxSum(l,n):
+    res = l[0]
+    maxEnding = l[0]
+    for i in range(1,n):
+        maxEnding = max(maxEnding+l[i], l[i])
+        res = max(maxEnding,res)
+    return res
+
+def overallMaxSum(l,n):
+    max_normal = normalMaxSum(l,n)
+
+    if max_normal < 0:
+        return max_normal
+
+    l_sum = 0
+    for i in range(0,n):
+        l_sum += l[i]
+        l[i] = -l[i]
+
+    max_circular = l_sum + normalMaxSum(l,n)
+
+    return max(max_circular,max_normal)
+
+
+l = [-8,7,6]
+d = 3
+print(maxCircularSum1(l,d))
 
