@@ -175,6 +175,7 @@ def maxCircularSum1(l,n):
 
 
     # Efficient Approach
+
 def normalMaxSum(l,n):
     res = l[0]
     maxEnding = l[0]
@@ -197,6 +198,128 @@ def overallMaxSum(l,n):
     max_circular = l_sum + normalMaxSum(l,n)
 
     return max(max_circular,max_normal)
+
+# Find the majority element in the list
+# Majority element ----> that element should appear more than n/2 times,
+#                       Not exactly n/2, it should be more
+
+
+    # Naive Method
+
+def findMajority1(l,n):
+    for i in range(n):
+        count = 1
+        for j in range(i+1,n):
+            if l[i] == l[j]:
+                count +=1
+        if count > n/2:
+            return i
+    return -1
+
+    # Efficient Method
+
+def findMajority2(l,n):
+    res = 0
+    count = 0
+
+    # finding a candidate
+
+    for i in range(1,n):
+        if l[res] == l[i]:
+            count += 1
+        else:
+            count -=1
+        if count == 0:
+            res = i
+            count = 1
+    # Check if a candidate is actually a majority
+
+    count = 0
+    for i in range (0,n):
+        if l[res] == l[i]:
+            count += 1
+    if count <= (n//2):
+        res = -1
+    return res
+
+# Maximum group flips to make same
+
+def printGroups(l,n):
+    for i in range(1,n):
+        if (l[i] != l[i-1] ):
+            if ( l[i] != l[0]  ):
+                print('From', i, 'to', end =" ")
+            else:
+                print(i-1)
+            
+    if (l[n-1] != l[0]):
+        print(n-1)
+
+# find the Maximum sum of 'k' consective elements
+
+    # Naive Approach
+
+def maxKSum1(l,k):
+    n = len(l)
+    res = float("-inf")
+    i = 0
+    while (i+k-1 < n):
+        curr = 0
+        for j in range(k):
+            curr += l[i+j]
+        res = max(curr,res)
+        i+=1
+    return res
+
+    # Efficient Approach --> Sliding Window Technique
+
+def kMaxSum2(l,k):
+    curr = 0
+    for i in range(k):
+        curr += l[i]
+    res = curr
+    for i in range(k,len(l)):
+        curr = curr + l[i] - l[i-k]
+        res = max(res,curr)
+    return res
+
+# Subarray with Given Sum
+
+    # Naive Approach
+
+def isSubSum1(l,sum):
+    for i in range(len(l)):
+        curr = 0
+        for j in range(i,len(l)):
+            curr += l[j]
+            if (curr == sum):
+                return True
+    return False
+
+    # Efficient Approach
+
+def isSubSum2(l,sum):
+    s,curr = 0,0
+    for e in range(len(l)):
+        curr += l[e]
+        while (curr > sum):
+            curr -= l[s]
+            s += 1
+        if (curr == sum):
+            return True
+
+    return False
+
+
+
+
+
+
+
+
+
+
+
 
 
 l = [-8,7,6]
