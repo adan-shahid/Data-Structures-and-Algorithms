@@ -310,16 +310,87 @@ def isSubSum2(l,sum):
 
     return False
 
+# Prefix Sum Technique --> given a fixed list and multiple range sum queries
+                        # how to answer the queries effciently
+# Important interview question
+
+    # Naive Solution
+
+def getSum1(l,r):
+    res = 0
+    for i in range(l,r+1):
+        res += l[i]
+    return res
+
+    # Efficient Solution
+l = [2,8,3,9,6,5,4]
+n = len(l)
+pSum = [None] * n
+pSum[0] = l[0]
+for i in range(1,n):
+    pSum[i] = pSum[i-1] +l[i]
+
+def getSum2(l,r):
+    if l == 0:
+        return pSum[r]
+    else:
+        return pSum[r] - pSum[l-1]
 
 
+# Equilibrium point --> if the list has equilibrium point or not
+# A point is called equilibrium point, if sum of elements before it and sum
+# elements after it is the same.
 
+    # Naive Solution
+def ePoint1(l):
+    n = len(l)
+    for i in range(n):
+        ls, rs = 0, 0
+        for j in range(i):
+            ls += l[j]
+        for k in range(i+1,n):
+            rs += l[k]
+        if (ls == rs):
+            return True
+    return False
 
+    
+    # Efficient Solution
 
+def ePoint2(l):
+    rs = sum(l)
+    ls = 0
+    for i in range(len(l)):
+        rs -= l[i]
+        if (ls == rs):
+            return True
+        ls += l[i]
+    return False
 
+# Maximum appearing element in ranges
 
+    # Naive Solution
 
+def maxAppear1(left, right):
+    freq = [0] * 100
+    for i in range(len(l)):
+        for j in range(left[i], right[i]+1):
+            freq[j] += 1
+    
+    return freq.index(max(freq))
 
+    # Efficient Solution
 
+def maxAppear2(left,right):
+    freq = [0] * 101
+    for i in range(len(left)):
+        freq[left[i]] += 1
+        freq[right[l]+1] -= 1
+
+    for i in range(1,100):
+        freq[i] = freq[i] + freq[i-1]
+
+    return freq.index(max(freq))
 
 
 l = [-8,7,6]
