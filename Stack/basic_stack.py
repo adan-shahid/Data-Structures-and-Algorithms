@@ -107,4 +107,80 @@ class twoStack:
     def size2(self):
         return self.size - self.top2
 
+# Implement K stacks in an array
+class kStacks:
+    def __init__(self,n,k):
+        self.cap = n
+        self.k = k
+        self.arr = [None]*n
+        self.top = [-1]*k
+        self.next = [i+1 for i in range(n)]
+        self.next[n-1] = -1
+        self.free_top = 0
 
+    def push(self, sn, x):
+        i = self.free_top
+        self.free_top = self.next[self.free_top]
+        self.arr[i] = x
+        self.next[i] = self.top[sn]
+        self.top[sn] = i
+
+    def pop(self, sn):
+        prev.top = self.top[sn]
+        self.top[sn] = next[prev_top]
+        self.next[prev_top] = self.free_top
+        self.free_top = prev.top
+        return self.arr[prev_top]
+
+    def isEmpty(self,sn):
+        return self.top[sn] == -1
+
+# stock Span Problem--> given array represents the pieces of stock i=on 'n' consective days
+    #span on a day------ No is of consective days(icnluding the current one) and days before it, which has value
+    # equal or smaller
+
+    # Naive Solution
+def printSpan(arr):
+    for i in range(len(arr)):
+        span = 1
+        j = i - 1
+        while j >= 0 and arr[i] >= arr[j]:
+            span += 1
+            j -= 1
+        print(span, end="")
+
+    # Efficient Solution-----Linear Time
+def printSpan1(arr):
+    st = []
+    st.append(0)
+    print(1, end="")
+    for i in range(1,n):
+        while (len(st) >= 0 and arr[st[-1]] <= arr[i]):
+            st.pop()
+        span = (i+1) if len(st) == 0 else i-st[-1]
+        print(span, end="")
+        st.append(i)
+
+# Previous Greater Element
+    # Naive Solutoion
+def prevGreater(arr):
+    for i in range(len(arr)):
+        pg = -1
+        for j in range(i-1, -1, -1):
+            if arr[j] > arr[i]:
+                pg = arr[j]
+                break
+        print(pg, end="")
+
+
+
+
+    # Efficient Solution
+def prevGreater1(arr):
+    st = []
+    for i in range(len(arr)):
+        while len(st) > 0 and st[-1] <= arr[i]:
+            st.pop()
+        pg = -1 if (len(st)==0) else st[-1]
+        print(pg, end = "")
+        st.append(arr[i])
