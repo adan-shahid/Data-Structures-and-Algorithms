@@ -173,8 +173,6 @@ def prevGreater(arr):
         print(pg, end="")
 
 
-
-
     # Efficient Solution
 def prevGreater1(arr):
     st = []
@@ -184,3 +182,80 @@ def prevGreater1(arr):
         pg = -1 if (len(st)==0) else st[-1]
         print(pg, end = "")
         st.append(arr[i])
+
+# Next greater element
+    # Naive Solution
+def printNextGreater(arr):
+    for i in range(len(arr)):
+        ng = -1
+        for j in range(i+1, len(arr)):
+            if arr[j] > arr[i]:
+                ng = arr[j]
+                break
+            print(ng, end = "")
+
+    # Efficient Solution
+
+def nextGreater(arr):
+    st = []
+    res=[None]*len(arr)
+    for i in range(n-1, -1, -1):
+        while len(st) > 0 and st[-1] <= arr[i]:
+            st.pop()
+        res[i] = -1 if len(st) == 0 else st[-1]
+        st.append(arr[i])
+    for x in res:
+        print(x, end="")
+
+# Largest Rectangular Area in a Histogram
+    # Naive Solution--> O(n**2)
+def getMaxArea(arr):
+    res = 0
+    n = len(arr)
+    for i in range(n):
+        curr = arr[i]
+        for j in range(i-1, -1, -1):
+            if arr[j] >= arr[i]:
+                curr += arr[i]
+            else:
+                break
+        for j in range(i+1, n):
+            if arr[j] >= arr[i]:
+                curr += arr[i]
+            else:
+                break
+        res = max(res, curr)
+    return res
+
+    # Efficient Solution
+def getMaxArea1(arr):
+    st = []
+    res = 0
+    for i in range(len(arr)):
+        while st and arr(st[-1]) >= arr[i]:
+            tp = st[-1]
+            st.pop()
+            curr_width = (i-st[-1]-1) if st else i
+            res = max(res, curr_width*arr[tp])
+        st.append(i)
+    while st:
+        tp= st[-1]
+        st.pop()
+        curr_width - (len(arr)-st[-1]-1) if st else len(arr)
+        res = max(res, curr_width*arr[tp])
+    return res
+
+# Largest Rectangle with all 1's
+    # We are given a boolean matrix, and we need to find out 
+    # largest submatrix with all 1's
+
+def maxRectangle(mat):
+    res = getMaxArea1(mat[0])
+    for i in range(1, len(mat)):
+        for j in range(len(mat[i])):
+            if mat[i][j]:
+                mat[i][j] += mat[i-1][j]
+        res= max(res, getMaxArea1(mat[i]))
+    return res
+
+            
