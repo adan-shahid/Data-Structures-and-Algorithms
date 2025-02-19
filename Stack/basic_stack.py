@@ -199,6 +199,7 @@ def printNextGreater(arr):
 def nextGreater(arr):
     st = []
     res=[None]*len(arr)
+    n = len(arr)
     for i in range(n-1, -1, -1):
         while len(st) > 0 and st[-1] <= arr[i]:
             st.pop()
@@ -257,5 +258,249 @@ def maxRectangle(mat):
                 mat[i][j] += mat[i-1][j]
         res= max(res, getMaxArea1(mat[i]))
     return res
+
+# Infix to postfix conversion using stack
+
+# Python program to convert infix expression to postfix
+# Class to convert the expression
+
+
+class Conversion:
+
+	def __init__(self, capacity):
+		self.top = -1
+		self.capacity = capacity
+		self.array = []
+		self.output = []
+		self.precedence = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
+
+	def isEmpty(self):
+		return True if self.top == -1 else False
+
+	def peek(self):
+		return self.array[-1]
+
+	def pop(self):
+		if not self.isEmpty():
+			self.top -= 1
+			return self.array.pop()
+		else:
+			return "$"
+
+	def push(self, op):
+		self.top += 1
+		self.array.append(op)
+
+	def isOperand(self, ch):
+		return ch.isalpha()
+
+	def notGreater(self, i):
+		try:
+			a = self.precedence[i]
+			b = self.precedence[self.peek()]
+			return True if a <= b else False
+		except KeyError:
+			return False
+
+	def infixToPostfix(self, exp):
+
+		for i in exp:
+			if self.isOperand(i):
+				self.output.append(i)
+
+			elif i == '(':
+				self.push(i)
+
+			elif i == ')':
+				while((not self.isEmpty()) and
+					self.peek() != '('):
+					a = self.pop()
+					self.output.append(a)
+				if (not self.isEmpty() and self.peek() != '('):
+					return -1
+				else:
+					self.pop()
+
+			else:
+				while(not self.isEmpty() and self.notGreater(i)):
+					self.output.append(self.pop())
+				self.push(i)
+
+		while not self.isEmpty():
+			self.output.append(self.pop())
+
+		print ("".join(self.output))
+
+
+# Driver's code
+if __name__ == '__main__':
+	exp = "a+b*(c^d-e)^(f+g*h)-i"
+	obj = Conversion(len(exp))
+
+	# Function call
+	obj.infixToPostfix(exp)
+
+# Python program to evaluate value of a postfix expression
+class Evaluate:	
+	def __init__(self, capacity):
+		self.top = -1
+		self.capacity = capacity
+		self.array = []
+	
+	def isEmpty(self):
+		return True if self.top == -1 else False
+	
+	def peek(self):
+		return self.array[-1]
+	
+	def pop(self):
+		if not self.isEmpty():
+			self.top -= 1
+			return self.array.pop()
+		else:
+			return "$"
+	
+	def push(self, op):
+		self.top += 1
+		self.array.append(op)
+
+	def evaluatePostfix(self, exp):
+		
+		for i in exp:
+			
+			if i.isdigit():
+				self.push(i)
+
+			else:
+				val1 = self.pop()
+				val2 = self.pop()
+				self.push(str(eval(val2 + i + val1)))
+
+		return int(self.pop())
+				
+
+			
+# Driver program to test above function
+exp = "231*+9-"
+obj = Evaluate(len(exp))
+print ("postfix evaluation: %d"%(obj.evaluatePostfix(exp)))
+
+# Python program to convert infix to prefix.
+
+def isOperator(c):
+	return (not (c >= 'a' and c <= 'z') and not(c >= '0' and c <= '9') and not(c >= 'A' and c <= 'Z'))
+
+def getPriority(C):
+	if (C == '-' or C == '+'):
+		return 1
+	elif (C == '*' or C == '/'):
+		return 2
+	elif (C == '^'):
+		return 3
+	return 0
+
+def infixToPrefix(infix):
+	operators = []
+
+	operands = []
+
+	for i in range(len(infix)):
+		if (infix[i] == '('):
+			operators.append(infix[i])
+
+		elif (infix[i] == ')'):
+			while (len(operators)!=0 and operators[-1] != '('):
+				op1 = operands[-1]
+				operands.pop()
+
+				op2 = operands[-1]
+				operands.pop()
+
+				op = operators[-1]
+				operators.pop()
+
+				tmp = op + op2 + op1
+				operands.append(tmp)
+
+			operators.pop()
+
+		elif (not isOperator(infix[i])):
+			operands.append(infix[i] + "")
+
+		else:
+			while (len(operators)!=0 and getPriority(infix[i]) <= getPriority(operators[-1])):
+				op1 = operands[-1]
+				operands.pop()
+
+				op2 = operands[-1]
+				operands.pop()
+
+				op = operators[-1]
+				operators.pop()
+
+				tmp = op + op2 + op1
+				operands.append(tmp)
+			operators.append(infix[i])
+
+	while (len(operators)!=0):
+		op1 = operands[-1]
+		operands.pop()
+
+		op2 = operands[-1]
+		operands.pop()
+
+		op = operators[-1]
+		operators.pop()
+
+		tmp = op + op2 + op1
+		operands.append(tmp)
+
+	return operands[-1]
+
+s = "(A-B/C)*(A/K-L)"
+print( infixToPrefix(s))
+
+#Python program to evaluate a prefix expression.
+
+def is_operand(c):
+	return c.isdigit()
+
+
+def evaluate(expression):
+	stack = []
+
+	for c in expression[::-1]:
+
+		if is_operand(c):
+			stack.append(int(c))
+
+		else:
+			o1 = stack.pop()
+			o2 = stack.pop()
+
+			if c == '+':
+				stack.append(o1 + o2)
+
+			elif c == '-':
+				stack.append(o1 - o2)
+
+			elif c == '*':
+				stack.append(o1 * o2)
+
+			elif c == '/':
+				stack.append(o1 / o2)
+
+	return stack.pop()
+
+
+# Driver code
+if __name__ == "__main__":
+	test_expression = "+9*26"
+	print(evaluate(test_expression))
+
+
+
+
+
 
             
