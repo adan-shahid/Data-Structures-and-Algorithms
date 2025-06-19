@@ -1,19 +1,13 @@
-# l = [1,34,56,87,43]
-# length = len(l)
-# i = 0
-# largest = 0
-# seclargest = 0
-# while (i < length):
-#   if l[i] > l[i + 1]:
-#     largest = l[i]
-#     seclargest = l[i+1]
-#   i = i + 1
-#   print(seclargest)
-# else:
-#   print(-1)
 
 
-i = 0
-while(i<5):
-  print(i)
-  i = i + 1
+def secLargest(arr):
+  n = len(arr)
+  arr.sort()
+  for i in range(n-2, -1, -1):
+    if arr[i] != arr[n-1]:
+      return arr[i]
+    
+  return -1
+
+arr = [12, 35,1, 10, 34, 25]
+print(secLargest(arr))
